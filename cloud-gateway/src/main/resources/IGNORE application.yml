@@ -1,0 +1,28 @@
+server:
+  port: 9901
+
+spring:
+  application:
+    name: CLOUD-GATEWAY
+  cloud:
+    gateway:
+      routes:
+        - id: CUSTOMER-SERVICE
+          uri: lb://CUSTOMER-SERVICE
+          predicates:
+            - Path=/customers/**
+        - id: CUSTOMER-ORDER-SERVICE
+          uri: lb://CUSTOMER-ORDER-SERVICE
+          predicates:
+            - Path=/orders/**
+  security:
+    user:
+      name: username
+      password: password
+            
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka
